@@ -20,7 +20,7 @@ def create_images():
     os.mkdir(tempfolder)
 
     for size in ICON_SIZE:
-        outfile=os.path.join(tempfolder,f"{size}.png")
+        outfile = os.path.join(tempfolder, f"{size}.png")
         image = Image.open(filepath)
         image.resize((size, size)).save(outfile, "PNG")
 
@@ -29,7 +29,6 @@ def create_images():
     zipfilename = f"{timestamp}.zip"
     zipfilepath = os.path.join(current_app.config["UPLOAD_FOLDER"], zipfilename)
 
-
     with ZipFile(zipfilepath, 'w') as zipObj:
         for foldername, subfolders, filenames in os.walk(tempfolder):
             for filename in filenames:
@@ -37,5 +36,3 @@ def create_images():
                 zipObj.write(filepath, filename)
         shutil.rmtree(foldername)
         return redirect(url_for('download_file', name=zipfilename))
-
-
