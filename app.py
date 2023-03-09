@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from filters import bp as filters_pb
 from action import bp as action_pb
 from android import bp as android_pb
@@ -38,6 +38,11 @@ def upload_images():
             'success': 'file uploaded successfully',
             'filename': filename
         }), 201
+
+
+@app.route('/download/<name>', methods=['GET'])
+def download_file(name):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], name)
 
 
 if __name__ == '__main__':
